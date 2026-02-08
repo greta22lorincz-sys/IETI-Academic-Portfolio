@@ -1,94 +1,97 @@
+/*
+ * Project: Building Database Manager
+ * File: buildings.c
+ * Description:
+ *   This program reads information about several buildings, sorts them
+ *   in ascending order by construction year, then sorts them in
+ *   descending order by surface area, and finally displays buildings
+ *   from the last 3 years with surface area greater than 400 m².
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct{
-    char tip[50]; 
-    char loc[50]; 
-    int an; 
-    float s; //(suprafata)
-}CLADIRE; 
+typedef struct {
+    char type[50];
+    char location[50];
+    int year;
+    float surface;   
+} BUILDING;
 
+void readBuildings(BUILDING *a, int n) {
+    for (int i = 0; i < n; i++) {
+        printf("\nBuilding %d:\n", i + 1);
 
-void citire(CLADIRE *a, int n){
-    for(int i=0; i<n; i++)
-    {
-        printf("cladire %d: \n", i+1); 
-        
-        printf("tipul cladirii: "); 
-        scanf("%s", a[i].tip); 
-        
-        printf("localizarea: "); 
-        scanf("%s", a[i].loc); 
-        
-        printf("anul: "); 
-        scanf("%d", &a[i].an); 
-        
-        printf("suprafata: "); 
-        scanf("%f", &a[i].s); 
+        printf("Type: ");
+        scanf("%s", a[i].type);
+
+        printf("Location: ");
+        scanf("%s", a[i].location);
+
+        printf("Year: ");
+        scanf("%d", &a[i].year);
+
+        printf("Surface area (m^2): ");
+        scanf("%f", &a[i].surface);
     }
 }
 
-int main(void)
-{
-    int n; 
-    printf("introduceti nr de cladiri: "); 
-    scanf("%d", &n); 
-    
-    CLADIRE *a= malloc(n*sizeof(CLADIRE)); 
-    if(!a){
-        printf("memorie insuf"); 
-        exit(1); 
+int main(void) {
+    int n;
+
+    printf("Enter the number of buildings: ");
+    scanf("%d", &n);
+
+    BUILDING *a = malloc(n * sizeof(BUILDING));
+    if (!a) {
+        printf("Error: insufficient memory.\n");
+        return 1;
     }
+
+
+    readBuildings(a, n);
+
     
-    //a 
-    citire(a, n); 
-    
-    //b 
-    //ord cresc dup an 
-    int sortat; 
-    do{
-        sortat =1; 
-        for(int i=0; i<n-1; i++)
-          if(a[i].an  >  a[i+1].an){
-              CLADIRE aux; 
-              aux = a[i]; 
-              a[i] = a[i+1]; 
-              a[i+1] = aux; 
-              sortat =0; 
-          }
-    }while(sortat == 0); 
-  
-  printf("cladirile in ord cresc dupa an: \n"); 
-  for(int i=0; i<n; i++)
-    printf("%d. %s din anul %d\n", i+1, a[i].tip, a[i].an); 
-    
-   //c 
-   //ord desc dp suprafata
-   int gata; 
-  do{
-      gata =1; 
-      for(int i=0; i<n-1; i++)
-         if(a[i].s  <  a[i+1].s)
-      {
-          CLADIRE temp; 
-          temp = a[i];
-          a[i] = a[i+1]; 
-          a[i+1] = temp; 
-          gata=0; 
-      }
-  }while(gata ==0); 
-  
-  printf("introduceti anul curent: "); 
-  int an_curent; 
-  scanf("%d", &an_curent); 
-  
-  printf("cladirile din ult 3 ani cu suprafata mai mare de 400 mp: \n");
-  for(int i=0; i<n; i++)
-    if(a[i].an<=(an_curent-3) && a[i].s>400)
-      printf("%s ", a[i].tip); 
-  
-  
-  free(a); 
+    int sorted;
+    do {
+        sorted = 1;
+        for (int i = 0; i < n - 1; i++) {
+            if (a[i].year > a[i + 1].year) {
+                BUILDING aux = a[i];
+                a[i] = a[i + 1];
+                a[i + 1] = aux;
+                sorted = 0;
+            }
+        }
+    } while (!sorted);
+
+    printf("\nBuildings in ascending order by year:\n");
+    for (int i = 0; i < n; i++)
+        printf("%d. %s — Year %d\n", i + 1, a[i].type, a[i].year);
+
+    do {
+        sorted = 1;
+        for (int i = 0; i < n - 1; i++) {
+            if (a[i].surface < a[i + 1].surface) {
+                BUILDING temp = a[i];
+                a[i] = a[i + 1];
+                a[i + 1] = temp;
+                sorted = 0;
+            }
+        }
+    } while (!sorted);
+
+    int currentYear;
+    printf("\nEnter the current year: ");
+    scanf("%d", &currentYear);
+
+    printf("\nBuildings from the last 3 years with surface > 400 m^2:\n");
+    for (int i = 0; i < n; i++) {
+        if (a[i].year >= currentYear - 3 && a[i].surface > 400)
+            printf("%s (%d)\n", a[i].type, a[i].year);
+    }
+
+    free(a);
     return 0;
 }
