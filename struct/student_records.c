@@ -51,10 +51,10 @@ int main(void) {
         return 1;
     }
 
-    // a) Read data
+   
     readPeople(v, n);
 
-    // b) Display people from year 2013 belonging to a given section
+   
     char section[30];
     printf("\nEnter a section to filter (year 2013): ");
     scanf("%s", section);
@@ -64,7 +64,7 @@ int main(void) {
         if (v[i].year == 2013 && strcmp(v[i].section, section) == 0)
             printf("%s %s\n", v[i].lastName, v[i].firstName);
 
-    // c) Sort by average for a given section
+    
     printf("\nEnter a section to sort by average: ");
     scanf("%s", section);
 
@@ -75,7 +75,7 @@ int main(void) {
         if (strcmp(v[i].section, section) == 0)
             filtered[count++] = v[i];
 
-    // Sort ascending by average
+    
     int sorted;
     do {
         sorted = 1;
