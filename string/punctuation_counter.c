@@ -1,5 +1,5 @@
 /*
- * Project: Punctuation Frequency Analyzer (IETI Lab 6)
+ * Project: Punctuation Frequency Analyzer 
  * File: punctuation_counter.c
  * Aim: This program analyzes a dynamically allocated string to count 
  * the frequency of spaces, commas, and periods.
