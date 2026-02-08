@@ -1,85 +1,85 @@
+/*
+ * Project: Book Database Manager
+ * File: books.c
+ * Description:
+ *   This program reads information about several books, displays those
+ *   published between 2004–2009, and sorts them in ascending order by year.
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct{
-   char autor[50]; 
-   char titlu[50]; 
-   int an_ap; 
-   char editura[30]; 
-}CARTE; 
+typedef struct {
+    char author[50];
+    char title[50];
+    int year;
+    char publisher[30];
+} BOOK;
 
-void citire(CARTE *v, int n){
-    for(int i=0; i<n; i++)
-    {
-        printf("cartea %d: \n", i+1); 
-        
-        printf("autor= "); 
-        scanf("%s", v[i].autor); 
-        getchar(); 
-        
-        printf("titlu= "); 
-        scanf("%s", v[i].titlu); 
-        getchar(); 
-        
-        printf("editura= "); 
-        scanf("%s", v[i].editura); 
-        getchar(); 
-        
-        printf("an aparitie= "); 
-        scanf("%d", &v[i].an_ap); 
+void readBooks(BOOK *v, int n) {
+    for (int i = 0; i < n; i++) {
+        printf("\nBook %d:\n", i + 1);
+
+        printf("Author = ");
+        scanf("%s", v[i].author);
+
+        printf("Title = ");
+        scanf("%s", v[i].title);
+
+        printf("Publisher = ");
+        scanf("%s", v[i].publisher);
+
+        printf("Year of publication = ");
+        scanf("%d", &v[i].year);
     }
 }
 
+int main(void) {
+    int n;
 
-int main(void)
-{
-    printf("introduceti numarul de carti: "); 
-    int n; 
-    scanf("%d", &n); 
-    
-    CARTE *v= malloc(n*sizeof(CARTE)); 
-    if(!v){
-        printf("memorie insuficienta.\n"); 
-        exit(1); 
+    printf("Enter the number of books: ");
+    scanf("%d", &n);
+
+    BOOK *v = malloc(n * sizeof(BOOK));
+    if (!v) {
+        printf("Error: insufficient memory.\n");
+        return 1;
     }
-    
-    //a 
-    citire(v, n); 
-    
-    //b +c
-    
-    CARTE a[n]; 
-    int j=0; 
-    printf("cartile care au aparut intre 2004-2009: "); 
-    for(int i=0; i<n; i++)
-      if(v[i].an_ap >=2004 && v[i].an_ap<=2009){
-        printf("%s ", v[i].titlu); 
-        
-        a[j++] = v[i]; 
-      }
-        
-       int sortat; 
-       do{
-           sortat =1; 
-           for(int i=0; i<j-1; i++)
-             if(a[i].an_ap > a[i+1].an_ap){
-                 CARTE aux; 
-                 aux = a[i]; 
-                 a[i] = a[i+1]; 
-                 a[i+1] = aux; 
-                 sortat =0; 
-             }
-       }while(sortat == 0); 
+
    
+    readBooks(v, n);
+
     
-        
-    printf("\ncartile (2004-2009) ordonate cresc dupa an: \n"); 
-    for(int i=0; i<j; i++)
-      printf("%s \n", a[i].titlu); 
+    BOOK filtered[n];
+    int count = 0;
+
+    printf("\nBooks published between 2004 and 2009:\n");
+    for (int i = 0; i < n; i++) {
+        if (v[i].year >= 2004 && v[i].year <= 2009) {
+            printf("%s\n", v[i].title);
+            filtered[count++] = v[i];
+        }
+    }
+
     
-   
-   
-    free(v); 
+    int sorted;
+    do {
+        sorted = 1;
+        for (int i = 0; i < count - 1; i++) {
+            if (filtered[i].year > filtered[i + 1].year) {
+                BOOK aux = filtered[i];
+                filtered[i] = filtered[i + 1];
+                filtered[i + 1] = aux;
+                sorted = 0;
+            }
+        }
+    } while (!sorted);
+
+    printf("\nBooks (2004–2009) sorted by year:\n");
+    for (int i = 0; i < count; i++)
+        printf("%s (%d)\n", filtered[i].title, filtered[i].year);
+
+    free(v);
     return 0;
 }
