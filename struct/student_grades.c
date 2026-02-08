@@ -1,5 +1,5 @@
 /*
- * Project: Student Grade Manager (IETI Lab 6)
+ * Project: Student Grade Manager
  * File: student_grades.c
  * Description:
  *   This program reads a list of students, their exam grades,
