@@ -1,5 +1,5 @@
 /*
- * Project: Dynamic Phonebook Manager (IETI Lab 6)
+ * Project: Dynamic Phonebook Manager 
  * File: phonebook_manager.c
  * Description:
  *   This program manages a phone agenda using structures, allowing
