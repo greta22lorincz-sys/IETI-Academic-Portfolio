@@ -1,5 +1,5 @@
 /* 
- * Project: Dynamic String Character Search (IETI Lab 6)
+ * Project: Dynamic String Character Search 
  * File: string_search.c
  * Aim: This program allocates a dynamic string, reads input from the user, 
  * and identifies the index of a specific character within that string.
