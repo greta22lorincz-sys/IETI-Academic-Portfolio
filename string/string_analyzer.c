@@ -1,5 +1,5 @@
 /*
- * Project: String Property Analyzer (IETI Lab 6)
+ * Project: String Property Analyzer 
  * File: string_analyzer.c
  * Aim: This program performs various analyses on a user-provided string, 
  * including digit/letter verification, vowel counting, and string reversal.
@@ -67,4 +67,5 @@ int main(void) {
     printf("reversed string: %s\n", s);
 
     return 0;
+
 }
